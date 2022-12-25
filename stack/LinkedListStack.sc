@@ -1,17 +1,18 @@
+import dataStructures.stack.Stack
 
 object LinkedListStack {
-  case class Node(value: String, var next: Node = null)
+  case class Node[T](value: T, var next: Node[T] = null)
 }
 
 // without sentinel node
-
-class LinkedListStack() {
+// templatized
+class LinkedListStack[T]() extends Stack[T]{
   import LinkedListStack._
 
-  private var head: Node = null
+  private var head: Node[T] = null
 
   // TC: O(1)
-  def push(element: String): Unit = {
+  def push(element: T): Unit = {
     val newNode = Node(element)
     if(isEmpty()) {
       head = newNode
@@ -22,7 +23,7 @@ class LinkedListStack() {
   }
 
   // TC: O(1)
-  def pop(): String = {
+  def pop(): T = {
     if(!isEmpty()) {
       if(head.next != null) {
         val removingValue = head.value
@@ -37,7 +38,7 @@ class LinkedListStack() {
   }
 
   // TC: O(1)
-  def peek(): String = {
+  def peek(): T = {
     if(!isEmpty()) head.value
     else throw new Exception("stack is empty")
   }
@@ -51,6 +52,8 @@ class LinkedListStack() {
 
 
 // with sentinel node
+// cannot make data type generic with sentinel nodes because there needs to be a consistent default value
+// e.g. string/char can default to null while int/double cannot.
 /*
 class LinkedListStack() {
   import LinkedListStack._
@@ -85,14 +88,14 @@ class LinkedListStack() {
 }
  */
 
-val stack = new LinkedListStack()
+val stack = new LinkedListStack[Int]()
 
-stack.isEmpty()
-stack.push("string 1")
-stack.isEmpty()
-stack.push("string 2")
-stack.peek()
-stack.pop()
-stack.push("string 3")
-stack.pop()
-stack.pop()
+stack.isEmpty() // val res0: Boolean = true
+stack.push(1)
+stack.isEmpty() // val res2: Boolean = false
+stack.push(2)
+stack.peek() // val res4: Int = 2
+stack.pop() // val res5: Int = 2
+stack.push(3)
+stack.pop() // val res7: Int = 3
+stack.pop() // val res8: Int = 1

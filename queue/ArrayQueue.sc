@@ -7,6 +7,10 @@ class ArrayQueue() {
 
   // have two pointers: head and tail. head points to the beg of the queue. tail points to the end.
   // check if full. if not, add new element one right to the tail. reassign tail to where that new element is.
+
+
+  // resizing
+  // copy old array to new when capacity is reached. copy head to end of array & beginning to tail
   def enqueue(element: String): Boolean = { // TC: O(1)
     if (isEmpty) {
       arr(head) = element
@@ -21,7 +25,8 @@ class ArrayQueue() {
         arr(tail) = element
       }
       true
-    } else false
+    } else
+      false
   }
 
   // check if empty. if not empty, set arr[idx] to null and move head one over to the right.
