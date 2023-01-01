@@ -1,5 +1,6 @@
 import dataStructures.stack.Stack
 
+import java.util
 import scala.reflect.ClassTag
 
 object ArrayStack {
@@ -13,7 +14,8 @@ class ArrayStack[T: ClassTag]() extends Stack[T]{
   private var count = 0
   private val lastIdx = () => count - 1
 
-  private def doubleStackSize(): Unit = {
+  private def isFull(): Boolean = count >= Capacity
+  private def doubleStackCapacity(): Unit = {
     Capacity = Capacity * 2
     val newStack = new Array[T](Capacity)
     stack.copyToArray(newStack, 0, stack.size)
@@ -23,7 +25,7 @@ class ArrayStack[T: ClassTag]() extends Stack[T]{
 
   // TC: O(1) amortized
   def push(element: T): Unit = {
-    if(isFull()) doubleStackSize()
+    if(isFull()) doubleStackCapacity()
     stack(lastIdx() + 1) = element
     count += 1
   }
@@ -33,7 +35,7 @@ class ArrayStack[T: ClassTag]() extends Stack[T]{
     // if stack is not empty we can remove an item
     if (!isEmpty()) {
       val removingItem = stack(lastIdx())
-      stack.copyToArray(stack, 0, lastIdx() - 1)
+      Array.copy(stack, 0, stack, 0, lastIdx())
       count -= 1
       removingItem
     } else throw new Exception("stack is empty")
@@ -47,8 +49,6 @@ class ArrayStack[T: ClassTag]() extends Stack[T]{
 
   // TC: 0(1)
   def isEmpty(): Boolean = count == 0
-
-  private def isFull(): Boolean = count >= Capacity
 }
 
 

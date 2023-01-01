@@ -6,7 +6,7 @@ object Deque {
 // O(1) TC for all methods
 
 // with sentinel nodes
-class Deque() {
+class LinkedListDeque() {
   import Deque._
 
   private val head = Node(null)
@@ -60,17 +60,17 @@ class Deque() {
 
 }
 
-val deque = new Deque()
+val deque = new LinkedListDeque()
 
-deque.isEmpty()
+deque.isEmpty() // val res0: Boolean = true
 deque.addFirst("string 1")
-deque.isEmpty()
+deque.isEmpty() // val res2: Boolean = false
 deque.addFirst("string 2")
-deque.getFirst()
-deque.getLast()
-deque.removeFirst()
-deque.removeFirst()
+deque.getFirst() // val res4: String = string 2
+deque.getLast() // val res5: String = string 1
+deque.removeFirst() // val res6: String = string 2
+deque.removeFirst() // val res7: String = string 1
 deque.addLast("string 3")
 deque.addLast("string 4")
-deque.removeLast()
-deque.removeLast()
+deque.removeLast() // val res10: String = string 4
+deque.removeLast() // val res11: String = string 3

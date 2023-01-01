@@ -1,7 +1,6 @@
 import dataStructures.queue.Queue
 
 // without sentinel nodes
-/*
 object LinkedListQueue {
   case class Node[T](value: T, var next: Node[T] = null)
 }
@@ -37,13 +36,26 @@ class LinkedListQueue[T]() extends Queue[T] {
 
   def isEmpty(): Boolean = head == null // TC: O(1)
 }
-*/
 
+val queue = new LinkedListQueue[String]()
+
+queue.enqueue("string 1")
+queue.enqueue("string 2")
+queue.isEmpty() // val res2: Boolean = false
+queue.peek() // val res3: String = string 1
+queue.dequeue() // val res4: String = string 1
+queue.dequeue() // val res5: String = string 2
+queue.isEmpty() // val res6: Boolean = true
+queue.enqueue("string 3")
+queue.enqueue("string 4")
+queue.dequeue() // val res9: String = string 3
+queue.dequeue() // val res10: String = string 4
 
 // with sentinel node just at the head
+/*
 object LinkedListQueue {
   // requires `prev` attribute.
-  case class Node(value: String, var next: Node = null)
+  case class Node(value: String, var next: Node = null, var prev: Node = null)
 }
 
 class LinkedListQueue() {
@@ -74,15 +86,14 @@ class LinkedListQueue() {
     } else throw new Exception("queue is empty")
   }
 
-  // no need to check for emptiness bc if it's empty the head will be pointing to sentinel tail
   def peek(): String = head.next.value
 
   def isEmpty(): Boolean = head.next == tail
-
 }
+ */
 
 
-val queue = new LinkedListQueue[String]()
+val queue = new LinkedListQueue()
 
 queue.enqueue("string 1")
 queue.enqueue("string 2")
