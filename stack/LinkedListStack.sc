@@ -1,5 +1,6 @@
 import dataStructures.stack.Stack
 
+/*
 object LinkedListStack {
   case class Node[T](value: T, var next: Node[T] = null)
 }
@@ -47,38 +48,37 @@ class LinkedListStack[T]() extends Stack[T]{
   def isEmpty(): Boolean = head == null
 
 }
+*/
 
-
-
+object LinkedListStack {
+  case class Node[T](value: Option[T], var next: Node[T] = null)
+}
 
 // with sentinel node
-// cannot make data type generic with sentinel nodes because there needs to be a consistent default value
-// e.g. string/char can default to null while int/double cannot.
-/*
-class LinkedListStack() {
+class LinkedListStack[T]() extends Stack[T] {
   import LinkedListStack._
 
-  private val head = Node(null)
+  private val head = Node[T](None)
 
   // TC: O(1)
-  def push(element: String): Unit = {
-    val newNode = Node(element)
+  def push(element: T): Unit = {
+    val newNode = Node[T](Option(element))
     newNode.next = head.next
     head.next = newNode
   }
 
   // TC: O(1)
-  def pop(): String = {
+  def pop(): T = {
     if(!isEmpty()) {
-      val removingValue = head.next.value
+      val removingValue = head.next.value.get
       head.next = head.next.next
       removingValue
     } else throw new Exception("stack is empty")
   }
 
   // TC: O(1)
-  def peek(): String = {
-    if(!isEmpty()) head.next.value
+  def peek(): T = {
+    if(!isEmpty()) head.next.value.get
     else throw new Exception("stack is empty")
   }
 
@@ -86,7 +86,6 @@ class LinkedListStack() {
   def isEmpty(): Boolean = head.next == null
 
 }
- */
 
 val stack = new LinkedListStack[Int]()
 

@@ -1,11 +1,16 @@
 import dataStructures.stack.Stack
 
-import java.util
+import scala.collection.mutable
 import scala.reflect.ClassTag
 
 object ArrayStack {
-  private var Capacity = 3 // set to 3 for testing purposes. Could be a much larger number.
+  private var Capacity = 10
 }
+
+// ClassTag stores the element type of a generic collection for runtime use. At runtime, the type
+// is erased and there needs to be a way to remember it, with one strategy being the usage of a ClassTag.
+// [T: ClassTag], as written below, is syntactic sugar for an implicit ClassTag parameter. When this parameter is present, the compiler
+// automatically generates a ClassTag object with the passed in type.
 
 class ArrayStack[T: ClassTag]() extends Stack[T]{
   import ArrayStack._
@@ -30,7 +35,7 @@ class ArrayStack[T: ClassTag]() extends Stack[T]{
     count += 1
   }
 
-  // TC: O(1)
+  // TC: O(N - 1)
   def pop(): T = {
     // if stack is not empty we can remove an item
     if (!isEmpty()) {

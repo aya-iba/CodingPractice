@@ -1,21 +1,21 @@
 
 object Deque {
-  case class Node(value: String, var next: Node = null, var prev: Node = null)
+  case class Node[T](value: Option[T], var next: Node[T] = null, var prev: Node[T] = null)
 }
 
 // O(1) TC for all methods
 
 // with sentinel nodes
-class LinkedListDeque() {
+class LinkedListDeque[T]() {
   import Deque._
 
-  private val head = Node(null)
-  private val tail = Node(null)
+  private val head = Node[T](null)
+  private val tail = Node[T](null)
   head.next = tail
   tail.prev = head
 
-  def addFirst(element: String): Unit = {
-    val newNode = Node(element)
+  def addFirst(element: T): Unit = {
+    val newNode = Node[T](Option(element))
 
     newNode.next = head.next
     newNode.prev = head
@@ -24,8 +24,8 @@ class LinkedListDeque() {
     head.next = newNode
   }
 
-  def addLast(element: String): Unit = {
-    val newNode = Node(element)
+  def addLast(element: T): Unit = {
+    val newNode = Node[T](Option(element))
 
     newNode.prev = tail.prev
     newNode.next = tail
@@ -34,33 +34,33 @@ class LinkedListDeque() {
     tail.prev = newNode
   }
 
-  def removeFirst(): String = {
+  def removeFirst(): T = {
     if(!isEmpty()) {
-      val removingValue = head.next.value
+      val removingValue = head.next.value.get
       head.next.next.prev = head
       head.next = head.next.next
       removingValue
     } else throw new Exception("deque is empty")
   }
 
-  def removeLast(): String = {
+  def removeLast(): T = {
     if(!isEmpty()) {
-      val removingValue = tail.prev.value
+      val removingValue = tail.prev.value.get
       tail.prev.prev.next = tail
       tail.prev = tail.prev.prev
       removingValue
     } else throw new Exception("deque is empty")
   }
 
-  def getFirst(): String = head.next.value
+  def getFirst(): T = head.next.value.get
 
-  def getLast(): String = tail.prev.value
+  def getLast(): T = tail.prev.value.get
 
   def isEmpty(): Boolean = head.next == tail
 
 }
 
-val deque = new LinkedListDeque()
+val deque = new LinkedListDeque[String]()
 
 deque.isEmpty() // val res0: Boolean = true
 deque.addFirst("string 1")
